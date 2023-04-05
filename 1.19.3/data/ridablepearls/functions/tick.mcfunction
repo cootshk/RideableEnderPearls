@@ -1,11 +1,11 @@
 #ride all ridable pearls
 execute as @e[type=minecraft:ender_pearl,tag=notriding] at @s if score @p RidingPearls matches 1 run ride @p mount @s
 #dismount stasis chambers
-execute if score AllowStasisChambers PearlConfig matches 1 PearlConfig as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:bubble_column run ride @p dismount
+execute if score AllowStasisChambers PearlConfig matches 1 as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:bubble_column run ride @p dismount
 #option to ban stasis chambers
-execute if score AllowStasisChambers PearlConfig matches 0 PearlConfig as @e[type=minecraft:ender_pearl] at @s if block ~ ~-1 ~ minecraft:bubble_column run kill @s
+execute if score AllowStasisChambers PearlConfig matches 0 as @e[type=minecraft:ender_pearl] at @s if block ~ ~-1 ~ minecraft:bubble_column run kill @s
 #option to break pearls in water
-execute if score BreakInWater PearlConfig matches 1 PearlConfig as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:water run kill @s
+execute if score BreakInWater PearlConfig matches 1 as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:water run kill @s
 #generate tags for a pearl to be ridden
 execute as @e[type=minecraft:ender_pearl,tag=notriding] run data merge entity @s {Tags:["riding"]}
 execute as @e[type=minecraft:ender_pearl] at @s unless data entity @s {Tags:["riding"]} unless data entity @s {Tags:["notriding"]} align xyz unless block ~ ~-1 ~ minecraft:bubble_column run data merge entity @s {Tags:["notriding"]}
