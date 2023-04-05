@@ -1,0 +1,6 @@
+{
+    "pack": {
+        "pack_format": 12,
+        "description": "Allows riding of ender pearls. Use /trigger ride to toggle. §lFOR >=1.19.4!"
+    }
+}
