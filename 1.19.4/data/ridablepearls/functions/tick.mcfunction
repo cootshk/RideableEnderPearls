@@ -1,9 +1,14 @@
-#teleport to pearl unless its in a bubble column
-execute as @e[type=minecraft:ender_pearl] at @s if score @p RidingPearls matches 1 unless block ~ ~-1 ~ minecraft:bubble_column run tp @p[distance=1..2] ~ ~ ~ ~180 ~
-#break pearls in water if config is set
-execute as @e[type=minecraft:ender_pearl] at @s if score BreakInWater PearlConfig matches 1 if block ~ ~ ~ minecraft:water run kill @s
-#break preals in bubble columns if config is set
-execute as @e[type=minecraft:ender_pearl] at @s unless score AllowStasisChambers PearlConfig matches 1 if block ~ ~-1 ~ minecraft:bubble_column run kill @s
+#ride all ridable pearls
+execute as @e[type=minecraft:ender_pearl,tag=notriding] at @s if score @p RidingPearls matches 1 run ride @p mount @s
+#dismount stasis chambers
+execute if score AllowStasisChambers PearlConfig matches 1 as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:bubble_column run ride @p dismount
+#option to ban stasis chambers
+execute if score AllowStasisChambers PearlConfig matches 0 as @e[type=minecraft:ender_pearl] at @s if block ~ ~-1 ~ minecraft:bubble_column run kill @s
+#option to break pearls in water
+execute if score BreakInWater PearlConfig matches 1 as @e[type=minecraft:ender_pearl,tag=riding] at @s if block ~ ~ ~ minecraft:water run kill @s
+#generate tags for a pearl to be ridden
+execute as @e[type=minecraft:ender_pearl,tag=notriding] run data merge entity @s {Tags:["riding"]}
+execute as @e[type=minecraft:ender_pearl] at @s unless data entity @s {Tags:["riding"]} unless data entity @s {Tags:["notriding"]} align xyz unless block ~ ~-1 ~ minecraft:bubble_column run data merge entity @s {Tags:["notriding"]}
 
 #display config for creative mode players (trigger)
 execute as @a[gamemode=creative] if score @s ConfigurePearls matches 1 if score @s Initialized matches 1 run tellraw @s ["",{"text":"#############################################","bold":true,"color":"gold"},"\n",{"text":"# ","bold":true,"color":"gold"},{"text":"Allow Pearl Stasis Chambers","underlined":true,"color":"dark_green","clickEvent":{"action":"run_command","value":"/execute as @s run scoreboard players set AllowStasisChambers PearlConfig 3"}},{"text":" # ","bold":true,"color":"gold"},{"text":"Ban Pearl Stasis Chambers","underlined":true,"color":"dark_red","clickEvent":{"action":"run_command","value":"/execute as @s run scoreboard players set AllowStasisChambers PearlConfig 2"}},{"text":" #","bold":true,"color":"gold"},"\n",{"text":"#############################################","bold":true,"color":"gold"},"\n",{"text":"# ","bold":true,"color":"gold"},{"text":"Break Ender Pearls In Water","underlined":true,"color":"dark_green","clickEvent":{"action":"run_command","value":"/execute as @s run scoreboard players set BreakInWater PearlConfig 3"}},{"text":" # ","bold":true,"color":"gold"},{"text":"Keep Ender Pearls In Water","underlined":true,"color":"dark_red","clickEvent":{"action":"run_command","value":"/execute as @s run scoreboard players set BreakInWater PearlConfig 2"}},{"text":" #","bold":true,"color":"gold"},"\n",{"text":"#############################################","bold":true,"color":"gold"}]
