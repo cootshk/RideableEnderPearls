@@ -21,8 +21,8 @@ execute if score @s ConfigurePearls matches 1 if score BreakInWater PearlConfig 
 execute as @a[gamemode=creative] if score @s ConfigurePearls matches 1 if score BreakInWater PearlConfig matches 3 run tellraw @s ["",{"text":"Ender Pearls Will Break In Water!","color":"dark_green"}]
 execute if score @s ConfigurePearls matches 1 if score BreakInWater PearlConfig matches 3 run scoreboard players set BreakInWater PearlConfig 1
 #if not in creative mode
-execute as @a[gamemode=!creative] if score @s ConfigurePearls matches 1 ConfigurePearls run tellraw @s ["",{"text":"You must be in creative mode to configure ender pearls!","color":"dark_red"}]
-execute as @a if score @s ConfigurePearls matches 1 ConfigurePearls run scoreboard players set @s ConfigurePearls 0
+execute as @a[gamemode=!creative] if score @s ConfigurePearls matches 1 run tellraw @s ["",{"text":"You must be in creative mode to configure ender pearls!","color":"dark_red"}]
+execute as @a if score @s ConfigurePearls matches 1 run scoreboard players set @s ConfigurePearls 0
 
 #ride pearls (trigger)
 execute as @a if score @s RidePearls matches 1 if score @s RidingPearls matches 1 run tellraw @s ["",{"text":"You can already ride ender pearls!","color":"dark_red"}]
